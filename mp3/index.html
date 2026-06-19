@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="nl" data-lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signaalketen — Productie Cheat Sheet</title>
+<meta name="description" content="Een visuele gids door het productieproces: drums, bass, sound design, arrangement en mixing.">
+<meta property="og:title" content="Signaalketen — Productie Cheat Sheet">
+<meta property="og:description" content="Een visuele gids door het productieproces: drums, bass, sound design, arrangement en mixing.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1B1A16">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231B1A16'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%2346443B' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='10' fill='none' stroke='%23F4BE63' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='3' fill='%23F4BE63'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --panel-dark:#26241F;
+    --panel-darker:#1B1A16;
+    --panel-rail:#33312A;
+    --cream:#F1EAD9;
+    --cream-dim:#C9C0AC;
+    --ink:#1C1A17;
+    --amber:#E8A33D;
+    --amber-bright:#F4BE63;
+    --teal:#6E9B86;
+    --teal-bright:#8FC2A9;
+    --red:#C0503A;
+    --line:#46443B;
+    --paper:#EFE9DA;
+    --paper-card:#E4DCC8;
+    --radius:6px;
+    --maxw:920px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    margin:0;
+    background:var(--panel-darker);
+    color:var(--cream);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; margin:0;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;}
+  ::selection{background:var(--amber); color:var(--ink);}
+
+  /* ---------- language toggle ---------- */
+  html[data-lang="nl"] .lang-en{display:none !important;}
+  html[data-lang="en"] .lang-nl{display:none !important;}
+
+  .lang-switch{
+    display:flex; flex-shrink:0; margin-left:auto; border-left:1px solid var(--line);
+  }
+  .lang-switch button{
+    appearance:none; border:none; background:transparent; cursor:pointer;
+    font-family:'IBM Plex Mono'; font-size:0.74rem; letter-spacing:0.04em;
+    color:var(--cream-dim); padding:14px 16px;
+  }
+  .lang-switch button.active{color:var(--amber-bright); font-weight:600;}
+  .lang-switch button:hover{color:var(--amber-bright);}
+  .lang-switch .sep{color:var(--line); padding-top:14px;}
+
+  /* ---------- top texture ---------- */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:50; opacity:0.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- nav: console strip ---------- */
+  .console-nav{
+    position:sticky; top:0; z-index:40;
+    background:var(--panel-dark);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  .console-nav-inner{
+    max-width:1180px; margin:0 auto;
+    display:flex; align-items:center; gap:0;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .console-nav-inner::-webkit-scrollbar{display:none;}
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    padding:14px 20px; flex-shrink:0;
+    border-right:1px solid var(--line);
+  }
+  .brand-led{width:8px;height:8px;border-radius:50%;background:var(--amber-bright); box-shadow:0 0 8px 1px var(--amber-bright); flex-shrink:0;}
+  .brand span{font-family:'Space Grotesk'; font-weight:600; font-size:0.85rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--cream);}
+  .nav-links{display:flex; flex-shrink:0;}
+  .nav-link{
+    font-family:'IBM Plex Mono'; font-size:0.74rem; letter-spacing:0.04em;
+    color:var(--cream-dim); text-decoration:none; white-space:nowrap;
+    padding:14px 18px; border-right:1px solid var(--line);
+    position:relative; transition:color 0.2s ease;
+  }
+  .nav-link .nlabel{display:block; color:var(--cream); font-family:'Space Grotesk'; font-size:0.82rem; font-weight:500; margin-top:2px;}
+  .nav-link.active{color:var(--amber-bright);}
+  .nav-link.active .nlabel{color:var(--amber-bright);}
+  .nav-link.active::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:2px; background:var(--amber-bright);
+  }
+  .nav-link:hover{color:var(--amber-bright);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:96px 24px 80px;
+    background:
+      radial-gradient(ellipse 900px 500px at 20% -10%, rgba(232,163,61,0.10), transparent 60%),
+      var(--panel-darker);
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-inner{max-width:var(--maxw); margin:0 auto; position:relative; z-index:2;}
+  .eyebrow{
+    font-family:'IBM Plex Mono'; font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--amber-bright); display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow .dash{width:28px; height:1px; background:var(--amber-bright); display:inline-block;}
+  .hero h1{
+    font-size:clamp(2.4rem, 6vw, 4.2rem); line-height:1.04; font-weight:700; color:var(--cream);
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{font-style:normal; color:var(--amber-bright);}
+  .hero p.lede{
+    margin-top:24px; max-width:560px; font-size:1.08rem; line-height:1.6; color:var(--cream-dim);
+  }
+  .hero-meta{
+    margin-top:40px; display:flex; gap:28px; flex-wrap:wrap;
+  }
+  .hero-meta div{font-family:'IBM Plex Mono'; font-size:0.74rem; color:var(--cream-dim); letter-spacing:0.03em;}
+  .hero-meta strong{display:block; font-family:'Space Grotesk'; font-size:1.3rem; color:var(--cream); font-weight:600; margin-bottom:2px;}
+
+  /* VU meter decoration */
+  .vu-deco{
+    position:absolute; right:6%; top:50%; transform:translateY(-50%);
+    display:flex; gap:5px; align-items:flex-end; height:160px; opacity:0.85;
+  }
+  .vu-deco .bar{width:7px; background:linear-gradient(to top, var(--teal), var(--amber) 70%, var(--red) 92%); border-radius:2px; opacity:0.5;}
+  @media (max-width:780px){ .vu-deco{display:none;} }
+
+  /* ---------- signal spine ---------- */
+  .spine-wrap{position:relative; max-width:1180px; margin:0 auto;}
+
+  /* ---------- module sections ---------- */
+  .module{
+    position:relative; padding:90px 24px 30px; scroll-margin-top:64px;
+  }
+  .module-inner{max-width:var(--maxw); margin:0 auto; position:relative; z-index:2;}
+  .module-head{display:flex; align-items:flex-start; gap:18px; margin-bottom:44px;}
+  .jack{
+    flex-shrink:0; width:54px; height:54px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #3a382f, var(--panel-dark) 70%);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono'; font-weight:600; font-size:0.95rem; color:var(--amber-bright);
+    box-shadow: inset 0 0 0 3px var(--panel-darker), 0 0 0 1px var(--line);
+  }
+  .module-head h2{font-size:clamp(1.6rem,3.4vw,2.1rem); color:var(--cream); font-weight:600;}
+  .module-head .sub{font-family:'IBM Plex Mono'; font-size:0.76rem; color:var(--teal-bright); letter-spacing:0.06em; text-transform:uppercase; margin-top:6px; display:block;}
+
+  .lead-text{color:var(--cream-dim); font-size:1rem; line-height:1.65; max-width:640px; margin-bottom:36px;}
+
+  /* card grid */
+  .grid{display:grid; gap:18px;}
+  .grid.cols-2{grid-template-columns:1fr 1fr;}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  @media (max-width:760px){ .grid.cols-2, .grid.cols-3{grid-template-columns:1fr;} }
+
+  .card{
+    background:var(--panel-dark);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 22px 20px;
+    transition:border-color 0.2s ease, transform 0.2s ease;
+  }
+  .card:hover{border-color:var(--amber); transform:translateY(-2px);}
+  .card h3{font-size:1.02rem; color:var(--cream); font-weight:600; margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3 .tag{
+    font-family:'IBM Plex Mono'; font-size:0.62rem; padding:2px 7px; border-radius:20px;
+    background:rgba(232,163,61,0.14); color:var(--amber-bright); letter-spacing:0.04em; text-transform:uppercase;
+  }
+  .card p, .card li{color:var(--cream-dim); font-size:0.92rem; line-height:1.58;}
+  .card ul{margin:6px 0 0; padding-left:18px;}
+  .card li{margin-bottom:4px;}
+  .card .note{
+    margin-top:12px; padding-top:12px; border-top:1px dashed var(--line);
+    font-family:'IBM Plex Mono'; font-size:0.78rem; color:var(--teal-bright);
+  }
+
+  /* checklist style */
+  .steplist{list-style:none; margin:0; padding:0; counter-reset:step;}
+  .steplist li{
+    counter-increment:step;
+    display:flex; gap:14px; padding:14px 0; border-bottom:1px solid var(--line);
+    font-size:0.94rem; color:var(--cream-dim); line-height:1.55;
+  }
+  .steplist li:last-child{border-bottom:none;}
+  .steplist li::before{
+    content:counter(step);
+    flex-shrink:0; width:26px; height:26px; border-radius:50%;
+    background:var(--panel-darker); border:1px solid var(--amber);
+    color:var(--amber-bright); font-family:'IBM Plex Mono'; font-size:0.76rem;
+    display:flex; align-items:center; justify-content:center; margin-top:1px;
+  }
+  .steplist strong{color:var(--cream); font-weight:600;}
+
+  /* callout / sticky note */
+  .callout{
+    margin:28px 0; padding:18px 20px; border-radius:var(--radius);
+    background:rgba(110,155,134,0.10); border:1px solid rgba(110,155,134,0.35);
+    display:flex; gap:14px; align-items:flex-start;
+  }
+  .callout .icon{font-size:1.2rem; line-height:1;}
+  .callout p{margin:0; color:var(--cream); font-size:0.92rem; line-height:1.6;}
+  .callout strong{color:var(--teal-bright);}
+
+  .callout.warn{
+    background:rgba(192,80,58,0.10); border-color:rgba(192,80,58,0.35);
+  }
+  .callout.warn strong{color:#E27C63;}
+
+  /* ----- arrangement phase timeline ----- */
+  .phase-track{position:relative; margin-top:10px;}
+  .phase{
+    position:relative; padding:26px 24px 24px 24px; margin-bottom:0;
+    background:var(--panel-dark); border:1px solid var(--line); border-radius:var(--radius);
+  }
+  .phase + .wall{
+    display:flex; align-items:center; gap:12px; margin:0; padding:18px 6px;
+  }
+  .wall .wline{flex:1; height:0; border-top:2px dashed var(--line);}
+  .wall span{
+    font-family:'IBM Plex Mono'; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:#8b8878; white-space:nowrap; display:flex; align-items:center; gap:8px;
+  }
+  .wall span::before, .wall span::after{content:"▮▮"; letter-spacing:2px; color:var(--line); font-size:0.6rem;}
+  .phase-num{
+    font-family:'IBM Plex Mono'; font-size:0.7rem; color:var(--amber-bright); letter-spacing:0.08em; text-transform:uppercase;
+    margin-bottom:8px; display:block;
+  }
+  .phase h3{font-size:1.15rem; color:var(--cream); margin-bottom:10px;}
+  .phase p, .phase li{color:var(--cream-dim); font-size:0.92rem; line-height:1.6;}
+  .phase ul{margin:8px 0 0; padding-left:18px;}
+  .phase li{margin-bottom:5px;}
+  .bars-pill{
+    display:inline-flex; gap:4px; margin-top:14px;
+  }
+  .bars-pill span{
+    font-family:'IBM Plex Mono'; font-size:0.68rem; padding:4px 10px; border-radius:20px;
+    background:var(--panel-darker); border:1px solid var(--line); color:var(--cream-dim);
+  }
+  .bars-pill span.hot{border-color:var(--amber); color:var(--amber-bright);}
+
+  /* ----- frequency / EQ diagrams ----- */
+  .diagram-card{
+    background:var(--panel-dark); border:1px solid var(--line); border-radius:var(--radius);
+    padding:24px; margin:24px 0;
+  }
+  .diagram-card .dtitle{
+    font-family:'IBM Plex Mono'; font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--teal-bright); margin-bottom:16px; display:block;
+  }
+  .freq-bar{position:relative; height:64px; margin:30px 0 10px;}
+  .freq-bar .track{
+    position:absolute; left:0; right:0; top:28px; height:6px; border-radius:4px;
+    background:linear-gradient(90deg, #4A6E5E, #E8A33D 55%, #C0503A 85%);
+    opacity:0.55;
+  }
+  .freq-mark{position:absolute; top:0; transform:translateX(-50%); text-align:center; width:100px;}
+  .freq-mark .dot{width:12px; height:12px; border-radius:50%; background:var(--amber-bright); margin:18px auto 8px; border:2px solid var(--panel-darker); box-shadow:0 0 0 2px var(--amber-bright);}
+  .freq-mark .val{font-family:'IBM Plex Mono'; font-size:0.78rem; color:var(--cream); font-weight:600;}
+  .freq-mark .lab{font-size:0.72rem; color:var(--cream-dim); margin-top:2px;}
+  .freq-mark.optional .dot{background:transparent; border:2px dashed var(--cream-dim); box-shadow:none;}
+  .freq-mark.optional .val{color:var(--cream-dim);}
+
+  /* sidechain ducking viz */
+  .duck-viz{width:100%; height:auto; display:block;}
+  .duck-legend{display:flex; gap:24px; margin-top:14px; flex-wrap:wrap;}
+  .duck-legend div{display:flex; align-items:center; gap:8px; font-family:'IBM Plex Mono'; font-size:0.74rem; color:var(--cream-dim);}
+  .duck-legend .sw{width:14px; height:4px; border-radius:2px;}
+
+  /* groove subdivisions */
+  .groove-row{display:flex; align-items:center; gap:14px; margin-top:14px;}
+  .groove-label{font-family:'IBM Plex Mono'; font-size:0.7rem; color:var(--cream-dim); width:64px; flex-shrink:0;}
+  .groove-ticks{display:flex; flex:1; gap:3px;}
+  .groove-ticks i{height:18px; flex:1; background:var(--panel-rail); border-radius:2px; display:block; font-style:normal;}
+  .groove-ticks i.on{background:var(--amber-bright);}
+
+  /* ----- mix matrix / kick-bass cross ----- */
+  .matrix-card{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+  .matrix-pill{
+    font-family:'IBM Plex Mono'; font-size:0.78rem; padding:8px 14px; border-radius:6px;
+    background:var(--panel-darker); border:1px solid var(--line); color:var(--cream);
+    display:flex; align-items:center; gap:8px;
+  }
+  .matrix-pill .arrow{color:var(--amber-bright);}
+
+  /* summary / quick reference */
+  .summary-section{
+    background:var(--paper); color:var(--ink); padding:90px 24px 110px; position:relative;
+  }
+  .summary-section .module-inner{max-width:1100px;}
+  .summary-section .module-head .jack{
+    background:radial-gradient(circle at 35% 30%, #fff, var(--paper-card) 70%);
+    border:1px solid #cfc6ae; color:#9a6a1f;
+    box-shadow: inset 0 0 0 3px var(--paper), 0 0 0 1px #cfc6ae;
+  }
+  .summary-section .module-head h2{color:var(--ink);}
+  .summary-section .lead-text{color:#5c5746;}
+  .summary-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  @media (max-width:920px){ .summary-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .summary-grid{grid-template-columns:1fr;} }
+  .sum-card{
+    background:var(--paper-card); border:1px solid #d2c8ae; border-radius:6px; padding:18px;
+  }
+  .sum-card h4{
+    font-family:'IBM Plex Mono'; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em;
+    color:#8a6620; margin:0 0 10px;
+  }
+  .sum-card ul{margin:0; padding-left:16px;}
+  .sum-card li{font-size:0.85rem; line-height:1.55; color:#3c3829; margin-bottom:4px;}
+
+  /* footer */
+  footer{
+    background:var(--panel-darker); padding:50px 24px 60px; border-top:1px solid var(--line);
+  }
+  footer .module-inner{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px;}
+  footer p{font-family:'IBM Plex Mono'; font-size:0.74rem; color:var(--cream-dim); margin:0;}
+  .back-top{
+    font-family:'IBM Plex Mono'; font-size:0.74rem; color:var(--amber-bright); text-decoration:none;
+    border:1px solid var(--line); padding:9px 16px; border-radius:30px; transition:border-color 0.2s ease;
+  }
+  .back-top:hover{border-color:var(--amber-bright);}
+
+  /* fade-in on scroll */
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity 0.6s ease, transform 0.6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<nav class="console-nav">
+  <div class="console-nav-inner">
+    <div class="brand"><span class="brand-led"></span><span>Signaalketen</span></div>
+    <div class="nav-links">
+      <a class="nav-link" href="#drums">01<span class="nlabel">Drums</span></a>
+      <a class="nav-link" href="#bass">02<span class="nlabel">Bass</span></a>
+      <a class="nav-link" href="#sound-design">03<span class="nlabel">Sound Design</span></a>
+      <a class="nav-link" href="#arrangement">04<span class="nlabel"><span class="lang-nl">Arrangement</span><span class="lang-en">Arrangement</span></span></a>
+      <a class="nav-link" href="#mixing">05<span class="nlabel">Mixing</span></a>
+      <a class="nav-link" href="#summary">06<span class="nlabel"><span class="lang-nl">Cheat Sheet</span><span class="lang-en">Cheat Sheet</span></span></a>
+    </div>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-set-lang="nl" class="active">NL</button>
+      <span class="sep">/</span>
+      <button type="button" data-set-lang="en">EN</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="vu-deco" aria-hidden="true">
+    <div class="bar" style="height:40%"></div>
+    <div class="bar" style="height:70%"></div>
+    <div class="bar" style="height:55%"></div>
+    <div class="bar" style="height:90%"></div>
+    <div class="bar" style="height:35%"></div>
+    <div class="bar" style="height:65%"></div>
+    <div class="bar" style="height:48%"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="dash"></span>
+      <span class="lang-nl">Productie cheat sheet · vijf modules</span>
+      <span class="lang-en">Production cheat sheet · five modules</span>
+    </div>
+    <h1>
+      <span class="lang-nl">Van eerste <em>kick</em><br>tot afgewerkte <em>mix</em>.</span>
+      <span class="lang-en">From first <em>kick</em><br>to a finished <em>mix</em>.</span>
+    </h1>
+    <p class="lede">
+      <span class="lang-nl">Eén signaalketen die je door het hele productieproces leidt: een beat bouwen, de bas eronder zetten, geluid verder ontwerpen, een song afmaken en de mix laten kloppen. Volg de modules in volgorde, of spring naar waar je nu zit.</span>
+      <span class="lang-en">One signal chain that guides you through the whole production process: build a beat, lay the bass underneath, design the rest of your sound palette, finish a song, and get the mix right. Follow the modules in order, or jump to wherever you are right now.</span>
+    </p>
+    <div class="hero-meta">
+      <div><strong>05</strong><span class="lang-nl">modules</span><span class="lang-en">modules</span></div>
+      <div><strong>20+</strong><span class="lang-nl">technieken</span><span class="lang-en">techniques</span></div>
+      <div><strong>~70ms</strong><span class="lang-nl">favoriete sidechain release</span><span class="lang-en">favorite sidechain release</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="spine-wrap">
+
+<!-- ============ MODULE 01 — DRUMS ============ -->
+<section class="module" id="drums">
+  <div class="module-inner">
+    <div class="module-head reveal">
+      <div class="jack">01</div>
+      <div>
+        <h2><span class="lang-nl">Drums &amp; Beat Bouwen</span><span class="lang-en">Drums &amp; Building a Beat</span></h2>
+        <span class="sub"><span class="lang-nl">Van kick tot groove</span><span class="lang-en">From kick to groove</span></span>
+      </div>
+    </div>
+    <p class="lead-text reveal">
+      <span class="lang-nl">Begin met de drums — die geven het fundament en het karakter van de track. Bouw op in volgorde: kick → clap/snare → hi-hat → groove → routing.</span>
+      <span class="lang-en">Start with the drums — they give the track its foundation and character. Build up in order: kick → clap/snare → hi-hat → groove → routing.</span>
+    </p>
+
+    <div class="grid cols-2 reveal">
+      <div class="card">
+        <h3><span class="lang-nl">Kick</span><span class="lang-en">Kick</span></h3>
+        <p><span class="lang-nl">Definitie wel aanwezig, maar niet overdreven. De enige vraag die telt:</span><span class="lang-en">Definition, yes — but not overdone. The only question that matters:</span></p>
+        <div class="note"><span class="lang-nl">"Heeft deze kick karakter?"</span><span class="lang-en">"Does this kick have character?"</span></div>
+      </div>
+      <div class="card">
+        <h3><span class="lang-nl">Clap / Snare</span><span class="lang-en">Clap / Snare</span></h3>
+        <p><span class="lang-nl">Vind je een clap leuk, maar weet je nog niet zeker? Bewaar 'm als <strong>plan B</strong>.</span><span class="lang-en">Like a clap but not sure yet? Save it as <strong>plan B</strong>.</span></p>
+      </div>
+    </div>
+
+    <div class="diagram-card reveal">
+      <span class="dtitle"><span class="lang-nl">Clap workflow — stappenplan</span><span class="lang-en">Clap workflow — step by step</span></span>
+      <ol class="steplist">
+        <li>
+          <span class="lang-nl"><strong>Zoek een clap</strong> die past bij de sfeer van de track.</span>
+          <span class="lang-en"><strong>Find a clap</strong> that fits the vibe of the track.</span>
+        </li>
+        <li>
+          <span class="lang-nl"><strong>Zet het volume</strong> op een eerste, voorzichtige plek.</span>
+          <span class="lang-en"><strong>Set the volume</strong> at a first, careful level.</span>
+        </li>
+        <li>
+          <span class="lang-nl"><strong>Zoom uit</strong> — beoordeel in de context van de hele track, niet solo.</span>
+          <span class="lang-en"><strong>Zoom out</strong> — judge it in the context of the full track, not solo.</span>
+        </li>
+        <li>
+          <span class="lang-nl"><strong>Vraag je af:</strong> wat doet de clap hier eigenlijk?</span>
+          <span class="lang-en"><strong>Ask yourself:</strong> what is the clap actually doing here?</span>
+        </li>
+        <li>
+          <span class="lang-nl">Niet dominant? Maak 'm <strong>zachter</strong>.</span>
+          <span class="lang-en">Not dominant? Make it <strong>softer</strong>.</span>
+        </li>
+        <li>
+          <span class="lang-nl"><strong>Filter 'm</strong> zodat hij weinig ruimte inneemt — achtergrond blijft achtergrond.</span>
+          <span class="lang-en"><strong>Filter it</strong> so it takes up little space — background stays background.</span>
+        </li>
+        <li>
+          <span class="lang-nl">Net iets nieuws toegevoegd? Check of de snare/clap-functie nog steeds is ingevuld.</span>
+          <span class="lang-en">Just added something new? Check whether the snare/clap function is still being filled.</span>
+        </li>
+      </ol>
+    </div>
+
+    <div class="diagram-card reveal">
+      <span class="dtitle"><span class="lang-nl">Hi-hat check &amp; groove</span><span class="lang-en">Hi-hat check &amp; groove</span></span>
+      <div class="callout" style="margin-top:0;">
+        <span class="icon">🎚️</span>
+        <p>
+          <span class="lang-nl"><strong>Tussendoor-trick:</strong> zet een EQ3 op de master en schakel de low end uit. Zo hoor je puur wat de hi's en mids doen, los van de kick/bas.</span>
+          <span class="lang-en"><strong>In-between trick:</strong> put an EQ3 on the master and switch off the low end. That way you hear purely what the highs and mids are doing, separate from the kick/bass.</span>
+        </p>
+      </div>
+      <p style="color:var(--cream-dim); font-size:0.9rem; margin-top:18px;">
+        <span class="lang-nl">Daarna groove toevoegen — werk met subdivisies voor ritmiek en swing:</span>
+        <span class="lang-en">Then add groove — work with subdivisions for rhythm and swing:</span>
+      </p>
+      <div class="groove-row">
+        <span class="groove-label"><span class="lang-nl">1/8e</span><span class="lang-en">1/8th</span></span>
+        <div class="groove-ticks">
+          <i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i>
+        </div>
+      </div>
+      <div class="groove-row">
+        <span class="groove-label"><span class="lang-nl">1/16e</span><span class="lang-en">1/16th</span></span>
+        <div class="groove-ticks">
+          <i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i></i>
+        </div>
+      </div>
+      <p style="color:var(--cream-dim); font-size:0.86rem; margin-top:16px;">
+        <span class="lang-nl">Ga daarna terug naar de sounds zelf — met groove erin klinkt een patch soms anders dan je dacht.</span>
+        <span class="lang-en">Then go back to the sounds themselves — with groove in place, a patch sometimes sounds different than you thought.</span>
+      </p>
+    </div>
+
+    <div class="card reveal">
+      <h3><span class="lang-nl">Routing &amp; effecten</span><span class="lang-en">Routing &amp; effects</span> <span class="tag"><span class="lang-nl">stap 2</span><span class="lang-en">step 2</span></span></h3>
+      <ul>
+        <li><span class="lang-nl">Stuur audio van losse impulses naar verschillende tracks</span><span class="lang-en">Send audio from separate impulses to different tracks</span></li>
+        <li><span class="lang-nl">Voeg effecten toe via een <strong>audio effect rack</strong></span><span class="lang-en">Add effects via an <strong>audio effect rack</strong></span></li>
+        <li><span class="lang-nl"><strong>Modulatie</strong> = verandert het geluid over tijd, niet statisch</span><span class="lang-en"><strong>Modulation</strong> = changes the sound over time, not static</span></li>
+        <li><span class="lang-nl">Groepeer effecten op de basistrack (<strong>group</strong>)</span><span class="lang-en">Group effects on the base track (<strong>group</strong>)</span></li>
+        <li><span class="lang-nl">Voeg een <strong>extra chain</strong> toe om het droge origineel te kunnen vergelijken</span><span class="lang-en">Add an <strong>extra chain</strong> so you can compare with the dry original</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULE 02 — BASS ============ -->
+<section class="module" id="bass">
+  <div class="module-inner">
+    <div class="module-head reveal">
+      <div class="jack">02</div>
+      <div>
+        <h2><span class="lang-nl">Bass</span><span class="lang-en">Bass</span></h2>
+        <span class="sub"><span class="lang-nl">De low end opruimen</span><span class="lang-en">Cleaning up the low end</span></span>
+      </div>
+    </div>
+    <p class="lead-text reveal">
+      <span class="lang-nl">Zodra de drums staan, is de bas de volgende laag die het fundament van de track bepaalt. Het belangrijkste werk hier: zorgen dat de bas niet vecht met de kick, en dat de low end opgeruimd blijft.</span>
+      <span class="lang-en">Once the drums are in place, the bass is the next layer that defines the track's foundation. The main job here: make sure the bass doesn't fight the kick, and keep the low end clean.</span>
+    </p>
+
+    <div class="grid cols-2 reveal">
+      <div class="card">
+        <h3><span class="lang-nl">Fundament bepalen</span><span class="lang-en">Defining the foundation</span></h3>
+        <ul>
+          <li><span class="lang-nl">Bepaal de fundamentele (sub) frequentie van de bas bewust</span><span class="lang-en">Deliberately choose the bass's fundamental (sub) frequency</span></li>
+          <li><span class="lang-nl">Geef de kick zijn ~50 Hz en laat de bas daar net naast zitten, niet eroverheen</span><span class="lang-en">Give the kick its ~50 Hz and let the bass sit right next to it, not on top</span></li>
+          <li><span class="lang-nl">Zie de kick-EQ gids in de mixing-module voor exacte richtlijnen</span><span class="lang-en">See the kick EQ guide in the mixing module for exact reference points</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="lang-nl">Mono in de sub</span><span class="lang-en">Mono in the sub</span></h3>
+        <ul>
+          <li><span class="lang-nl">Houd de allerlaagste frequenties van de bas mono</span><span class="lang-en">Keep the very lowest frequencies of the bass mono</span></li>
+          <li><span class="lang-nl">Zo blijft de bas overeind op elk systeem — ook kleine speakers en telefoons</span><span class="lang-en">That way the bass holds up on every system — including small speakers and phones</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <span class="icon">🔁</span>
+      <p>
+        <span class="lang-nl"><strong>Sidechain kick → bass.</strong> Gebruik sidechain compressie om ruimte tussen kick en bas te creëren in plaats van ze in volume tegen elkaar te laten knokken. Een release van <strong>~70 ms</strong> geeft vaak een lekkere, funky groove. Meer hierover in de mixing-module.</span>
+        <span class="lang-en"><strong>Sidechain kick → bass.</strong> Use sidechain compression to create space between kick and bass instead of letting them fight each other in volume. A release of <strong>~70 ms</strong> often gives a nice, funky groove. More on this in the mixing module.</span>
+      </p>
+    </div>
+
+    <div class="callout warn reveal">
+      <span class="icon">🌀</span>
+      <p>
+        <span class="lang-nl"><strong>Subtractive of FM voor je bas?</strong> Subtractive geeft vaak een rondere, stevigere bas; FM geeft een scherpere, meer melodische bas. Beide technieken worden uitgelegd in de sound design-module hieronder.</span>
+        <span class="lang-en"><strong>Subtractive or FM for your bass?</strong> Subtractive often gives a rounder, fatter bass; FM gives a sharper, more melodic bass. Both techniques are explained in the sound design module below.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULE 03 — SOUND DESIGN ============ -->
+<section class="module" id="sound-design">
+  <div class="module-inner">
+    <div class="module-head reveal">
+      <div class="jack">03</div>
+      <div>
+        <h2><span class="lang-nl">Sound Design</span><span class="lang-en">Sound Design</span></h2>
+        <span class="sub"><span class="lang-nl">De rest van je geluidspalet</span><span class="lang-en">The rest of your sound palette</span></span>
+      </div>
+    </div>
+    <p class="lead-text reveal">
+      <span class="lang-nl">Met drums en bas op hun plek bouw je de rest van je geluidspalet uit. Drie synthese-routes, plus de textuurlaag die een geluid pas echt body geeft.</span>
+      <span class="lang-en">With drums and bass in place, you build out the rest of your sound palette. Three synthesis routes, plus the texture layer that gives a sound real body.</span>
+    </p>
+
+    <div class="grid cols-3 reveal">
+      <div class="card">
+        <h3><span class="lang-nl">Subtractive</span><span class="lang-en">Subtractive</span> <span class="tag"><span class="lang-nl">wegsnijden</span><span class="lang-en">carving away</span></span></h3>
+        <p><span class="lang-nl">Start met een golfvorm rijk aan boventonen en haal frequenties weg met filters tot het geluid overblijft dat je zoekt.</span><span class="lang-en">Start with a waveform rich in overtones and remove frequencies with filters until you're left with the sound you're after.</span></p>
+        <ul>
+          <li><span class="lang-nl">Begin breed, snij gericht</span><span class="lang-en">Start broad, cut deliberately</span></li>
+          <li><span class="lang-nl">Filter = je belangrijkste gereedschap</span><span class="lang-en">Filter = your most important tool</span></li>
+        </ul>
+        <div class="note"><span class="lang-nl">→ goed voor: bas, pads, klassieke leads</span><span class="lang-en">→ good for: bass, pads, classic leads</span></div>
+      </div>
+      <div class="card">
+        <h3><span class="lang-nl">FM</span><span class="lang-en">FM</span> <span class="tag"><span class="lang-nl">moduleren</span><span class="lang-en">modulating</span></span></h3>
+        <p><span class="lang-nl">Oscillatoren beïnvloeden elkaars frequentie, waardoor de basistoon constant heen en weer beweegt.</span><span class="lang-en">Oscillators affect each other's frequency, making the base tone constantly move back and forth.</span></p>
+        <ul>
+          <li><span class="lang-nl"><strong>Coarse</strong> — grove frequentie-instelling</span><span class="lang-en"><strong>Coarse</strong> — rough frequency setting</span></li>
+          <li><span class="lang-nl"><strong>Level</strong> — mate van modulatie</span><span class="lang-en"><strong>Level</strong> — amount of modulation</span></li>
+        </ul>
+        <div class="note"><span class="lang-nl">→ combo: arpeggiator + operator + overdrive</span><span class="lang-en">→ combo: arpeggiator + operator + overdrive</span></div>
+      </div>
+      <div class="card">
+        <h3><span class="lang-nl">Wavetable</span><span class="lang-en">Wavetable</span> <span class="tag"><span class="lang-nl">scrollen</span><span class="lang-en">scrolling</span></span></h3>
+        <p><span class="lang-nl">De synth scrollt door een reeks golfvormen. Beweeg er doorheen met een LFO of envelope voor een evoluerend, digitaal geluid.</span><span class="lang-en">The synth scrolls through a series of waveforms. Move through it with an LFO or envelope for an evolving, digital sound.</span></p>
+        <ul>
+          <li><span class="lang-nl">Positie = klankkleur</span><span class="lang-en">Position = timbre</span></li>
+          <li><span class="lang-nl">Snelheid van scrollen = beweging</span><span class="lang-en">Scroll speed = movement</span></li>
+        </ul>
+        <div class="note"><span class="lang-nl">→ goed voor: groeiende leads, moderne bass</span><span class="lang-en">→ good for: growing leads, modern bass</span></div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <span class="icon">🌫️</span>
+      <p>
+        <span class="lang-nl"><strong>Textuurlaag — noise &amp; risers.</strong> Een riser is in de basis een soort noise/sweep, vaak gebruikt als transitie. Noise onder een geluid (bijvoorbeeld onder een collision-sound) geeft het extra body en dreiging zonder de toonhoogte te beïnvloeden. Denk in lagen: basisgeluid + textuur + beweging.</span>
+        <span class="lang-en"><strong>Texture layer — noise &amp; risers.</strong> A riser is essentially a kind of noise/sweep, often used as a transition. Noise underneath a sound (for example under a collision sound) gives it extra body and tension without affecting the pitch. Think in layers: base sound + texture + movement.</span>
+      </p>
+    </div>
+
+    <div class="callout warn reveal">
+      <span class="icon">🎧</span>
+      <p>
+        <span class="lang-nl"><strong>Routine.</strong> Geef geregeld feedback op je eigen nummers — luister kritisch terug, het liefst een dag later met frisse oren.</span>
+        <span class="lang-en"><strong>Routine.</strong> Regularly give feedback on your own tracks — listen back critically, ideally a day later with fresh ears.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULE 04 — ARRANGEMENT ============ -->
+<section class="module" id="arrangement">
+  <div class="module-inner">
+    <div class="module-head reveal">
+      <div class="jack">04</div>
+      <div>
+        <h2><span class="lang-nl">Een Song Afmaken</span><span class="lang-en">Finishing a Song</span></h2>
+        <span class="sub"><span class="lang-nl">Drie fases, blijf speels</span><span class="lang-en">Three phases, stay playful</span></span>
+      </div>
+    </div>
+    <p class="lead-text reveal">
+      <span class="lang-nl">Dit proces is bedoeld om het leuk te houden, niet om vast te lopen in perfectionisme. Werk fase voor fase — en denk pas aan de volgende fase als de huidige af is. Vandaar de "muur": die grens is met opzet.</span>
+      <span class="lang-en">This process is meant to keep things fun, not to get stuck in perfectionism. Work phase by phase — and don't think about the next phase until the current one is done. Hence the "wall": that boundary is intentional.</span>
+    </p>
+
+    <div class="phase-track reveal">
+
+      <div class="phase">
+        <span class="phase-num"><span class="lang-nl">Fase 1 — De loop</span><span class="lang-en">Phase 1 — The loop</span></span>
+        <h3><span class="lang-nl">Geef de loop een identiteit</span><span class="lang-en">Give the loop an identity</span></h3>
+        <ul>
+          <li><span class="lang-nl">De loop moet een <strong>eigen identiteit</strong> hebben</span><span class="lang-en">The loop needs its <strong>own identity</strong></span></li>
+          <li><span class="lang-nl">Het geluid moet er gewoon "staan"</span><span class="lang-en">The sound just needs to "stand"</span></li>
+          <li><span class="lang-nl">Nog niet nadenken over wat erna komt</span><span class="lang-en">Don't think about what comes next yet</span></li>
+        </ul>
+      </div>
+      <div class="wall"><div class="wline"></div><span><span class="lang-nl">muur — denk nog niet aan fase 2</span><span class="lang-en">wall — don't think about phase 2 yet</span></span><div class="wline"></div></div>
+
+      <div class="phase">
+        <span class="phase-num"><span class="lang-nl">Fase 2 — Tijd &amp; variatie</span><span class="lang-en">Phase 2 — Time &amp; variation</span></span>
+        <h3><span class="lang-nl">Ontdek wat de loop over tijd kan doen</span><span class="lang-en">Discover what the loop can do over time</span></h3>
+        <ul>
+          <li><span class="lang-nl">LFO's of andere modulatie — alles mag</span><span class="lang-en">LFOs or other modulation — anything goes</span></li>
+          <li><span class="lang-nl">Verwijder en voeg dingen toe</span><span class="lang-en">Remove and add things</span></li>
+          <li><span class="lang-nl">Laat de loop lopen om hem echt te <strong>ervaren</strong></span><span class="lang-en">Let the loop run so you really <strong>experience</strong> it</span></li>
+          <li><span class="lang-nl">Klaar op 8 bars? Dupliceer en zoek een nieuwe richting in de tijd</span><span class="lang-en">Done at 8 bars? Duplicate it and find a new direction over time</span></li>
+        </ul>
+        <div class="bars-pill">
+          <span class="hot">8 <span class="lang-nl">bars</span><span class="lang-en">bars</span></span><span class="hot">16 <span class="lang-nl">bars</span><span class="lang-en">bars</span></span><span>32 <span class="lang-nl">bars</span><span class="lang-en">bars</span></span>
+        </div>
+      </div>
+      <div class="wall"><div class="wline"></div><span><span class="lang-nl">muur — denk nog niet aan fase 3</span><span class="lang-en">wall — don't think about phase 3 yet</span></span><div class="wline"></div></div>
+
+      <div class="callout reveal" style="margin:0 0 24px;">
+        <span class="icon">🔈</span>
+        <p>
+          <span class="lang-nl"><strong>Verplichte tussenstop:</strong> ga naar huis en luister fase 2 terug op speakers. Andere ruimte, andere akoestiek, frisse oren — problemen die je in de studio niet hoorde, vallen daar wél op.</span>
+          <span class="lang-en"><strong>Mandatory checkpoint:</strong> go home and listen back to phase 2 on speakers. Different room, different acoustics, fresh ears — problems you didn't hear in the studio will stand out there.</span>
+        </p>
+      </div>
+
+      <div class="phase">
+        <span class="phase-num"><span class="lang-nl">Fase 3 — Speel met de onderdelen</span><span class="lang-en">Phase 3 — Play with the parts</span></span>
+        <h3><span class="lang-nl">Bouw het tot een volledig arrangement</span><span class="lang-en">Build it into a full arrangement</span></h3>
+        <ul>
+          <li><span class="lang-nl"><strong>Mute/solo-experiment:</strong> haal elementen weg, hoor wat er gebeurt met de energie</span><span class="lang-en"><strong>Mute/solo experiment:</strong> remove elements, hear what happens to the energy</span></li>
+          <li><span class="lang-nl"><strong>Energie-curve:</strong> bouw spanning op en laat 'm weer los — niet alles tegelijk op vol volume</span><span class="lang-en"><strong>Energy curve:</strong> build tension and release it again — not everything at full volume at once</span></li>
+          <li><span class="lang-nl"><strong>Contrast tussen secties:</strong> vol tegenover leeg, dicht tegenover ruimte</span><span class="lang-en"><strong>Contrast between sections:</strong> full versus empty, dense versus spacious</span></li>
+          <li><span class="lang-nl"><strong>Transities:</strong> risers, impacts, reverse cymbals, of juist stilte</span><span class="lang-en"><strong>Transitions:</strong> risers, impacts, reverse cymbals, or even silence</span></li>
+          <li><span class="lang-nl"><strong>Variatie per 8/16 bars:</strong> fills, stutters, kleine automatie zodat niets zich herhaalt zonder reden</span><span class="lang-en"><strong>Variation per 8/16 bars:</strong> fills, stutters, small automation so nothing repeats without reason</span></li>
+          <li><span class="lang-nl"><strong>Wissel instrumentatie:</strong> bijvoorbeeld een andere bassline in de tweede helft</span><span class="lang-en"><strong>Swap instrumentation:</strong> for example a different bassline in the second half</span></li>
+          <li><span class="lang-nl"><strong>Laat oren rusten:</strong> niet elke sectie alles veranderen — geef de luisteraar ruimte</span><span class="lang-en"><strong>Let ears rest:</strong> don't change everything in every section — give the listener room</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULE 05 — MIXING ============ -->
+<section class="module" id="mixing">
+  <div class="module-inner">
+    <div class="module-head reveal">
+      <div class="jack">05</div>
+      <div>
+        <h2><span class="lang-nl">Mixing — Notes &amp; Tricks</span><span class="lang-en">Mixing — Notes &amp; Tricks</span></h2>
+        <span class="sub"><span class="lang-nl">Alles zijn eigen plek geven</span><span class="lang-en">Giving everything its own place</span></span>
+      </div>
+    </div>
+    <p class="lead-text reveal">
+      <span class="lang-nl">Mixen is niet harder of zachter maken — het is frequentiebalans, dynamiek, stereobeeld en groove zo vormen dat elk element een duidelijke rol heeft.</span>
+      <span class="lang-en">Mixing isn't about making things louder or quieter — it's shaping frequency balance, dynamics, stereo image and groove so every element has a clear role.</span>
+    </p>
+
+    <div class="grid cols-2 reveal">
+      <div class="card">
+        <h3><span class="lang-nl">Compressie</span><span class="lang-en">Compression</span></h3>
+        <p><span class="lang-nl">Reduceert pieken, zodat het gemiddelde volume omhoog kan zonder te clippen.</span><span class="lang-en">Reduces peaks, so the average volume can go up without clipping.</span></p>
+        <ul>
+          <li><span class="lang-nl">Dikker, gecontroleerder geluid</span><span class="lang-en">Thicker, more controlled sound</span></li>
+          <li><span class="lang-nl">Kleiner verschil tussen luid/zacht</span><span class="lang-en">Smaller difference between loud/quiet</span></li>
+          <li><span class="lang-nl">Gelijkmatigere golfvorm</span><span class="lang-en">More even waveform</span></li>
+        </ul>
+        <div class="note"><span class="lang-nl">toepassingen: drums · bas · vocals · full mixbus</span><span class="lang-en">applications: drums · bass · vocals · full mixbus</span></div>
+      </div>
+      <div class="card">
+        <h3><span class="lang-nl">Sidechain Compressie</span><span class="lang-en">Sidechain Compression</span></h3>
+        <p><span class="lang-nl">Creëert ruimte tussen elementen die elkaar anders "bevechten" — vooral kick versus bas.</span><span class="lang-en">Creates space between elements that would otherwise "fight" each other — especially kick versus bass.</span></p>
+        <div class="note"><span class="lang-nl">tip: ~70ms release voor een funky groove</span><span class="lang-en">tip: ~70ms release for a funky groove</span></div>
+      </div>
+    </div>
+
+    <div class="diagram-card reveal">
+      <span class="dtitle"><span class="lang-nl">Sidechain ducking — kick → bass</span><span class="lang-en">Sidechain ducking — kick → bass</span></span>
+      <svg class="duck-viz" viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sidechain ducking diagram: kick pulses trigger volume dips in the bass">
+        <line x1="0" y1="35" x2="720" y2="35" stroke="#46443B" stroke-width="1"/>
+        <text x="0" y="22" fill="#C9C0AC" font-family="IBM Plex Mono" font-size="11" class="lang-nl">kick</text>
+        <text x="0" y="22" fill="#C9C0AC" font-family="IBM Plex Mono" font-size="11" class="lang-en">kick</text>
+        <g fill="#F4BE63">
+          <rect x="20" y="15" width="6" height="20" rx="2"/>
+          <rect x="200" y="15" width="6" height="20" rx="2"/>
+          <rect x="380" y="15" width="6" height="20" rx="2"/>
+          <rect x="560" y="15" width="6" height="20" rx="2"/>
+        </g>
+        <text x="0" y="78" fill="#C9C0AC" font-family="IBM Plex Mono" font-size="11" class="lang-nl">bass (sidechained)</text>
+        <text x="0" y="78" fill="#C9C0AC" font-family="IBM Plex Mono" font-size="11" class="lang-en">bass (sidechained)</text>
+        <path d="M0,100 L15,100 C30,100 35,135 50,135 C90,135 150,90 195,90 C210,90 215,135 230,135 C270,135 330,90 375,90 C390,90 395,135 410,135 C450,135 510,90 555,90 C570,90 575,135 590,135 C630,135 690,90 720,90"
+          fill="none" stroke="#8FC2A9" stroke-width="2.5"/>
+        <line x1="20" y1="146" x2="50" y2="146" stroke="#E27C63" stroke-width="1.5"/>
+        <text x="20" y="142" fill="#E27C63" font-family="IBM Plex Mono" font-size="9">~70ms release</text>
+      </svg>
+      <div class="duck-legend">
+        <div><span class="sw" style="background:#F4BE63"></span><span class="lang-nl">kick hit</span><span class="lang-en">kick hit</span></div>
+        <div><span class="sw" style="background:#8FC2A9"></span><span class="lang-nl">bass volume (duikt na elke kick)</span><span class="lang-en">bass volume (dips after every kick)</span></div>
+      </div>
+      <div class="matrix-card">
+        <div class="matrix-pill">Kick <span class="arrow">→</span> Bass</div>
+        <div class="matrix-pill">Kick <span class="arrow">→</span> Pads</div>
+        <div class="matrix-pill">Kick <span class="arrow">→</span> Synths</div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <h3><span class="lang-nl">EQ &amp; Frequentie-management</span><span class="lang-en">EQ &amp; Frequency Management</span></h3>
+      <p><span class="lang-nl"><strong>Kernprincipe:</strong> elk geluid verdient zijn eigen plek in het frequentiespectrum.</span><span class="lang-en"><strong>Core principle:</strong> every sound deserves its own place in the frequency spectrum.</span></p>
+      <ul>
+        <li><span class="lang-nl">Verwijder frequenties die botsen tussen elementen</span><span class="lang-en">Remove frequencies that clash between elements</span></li>
+        <li><span class="lang-nl">Versterk frequenties die het karakter van een element bepalen</span><span class="lang-en">Boost frequencies that define an element's character</span></li>
+        <li><span class="lang-nl">Beslis altijd in context van de volledige track, nooit solo — groepeer vergelijkbare sounds en pas dit principe daarop toe</span><span class="lang-en">Always decide in the context of the full track, never solo — group similar sounds and apply this principle to them</span></li>
+      </ul>
+      <div class="note"><span class="lang-nl">botsen twee sounds? bepaal wie domineert, snij die frequenties uit de ander</span><span class="lang-en">two sounds clashing? decide which one dominates, cut those frequencies from the other</span></div>
+    </div>
+
+    <div class="diagram-card reveal">
+      <span class="dtitle"><span class="lang-nl">Kick drum — frequentiegids</span><span class="lang-en">Kick drum — frequency guide</span></span>
+      <div class="freq-bar">
+        <div class="track"></div>
+        <div class="freq-mark" style="left:13.3%"><div class="dot"></div><div class="val">50 Hz</div><div class="lab"><span class="lang-nl">Sub — laag gewicht</span><span class="lang-en">Sub — low-end weight</span></div></div>
+        <div class="freq-mark optional" style="left:30%"><div class="dot"></div><div class="val">125–200 Hz</div><div class="lab"><span class="lang-nl">optionele cut (modder)</span><span class="lang-en">optional cut (mud)</span></div></div>
+        <div class="freq-mark" style="left:56.6%"><div class="dot"></div><div class="val">1 kHz</div><div class="lab"><span class="lang-nl">Punch — attack</span><span class="lang-en">Punch — attack</span></div></div>
+        <div class="freq-mark" style="left:76.7%"><div class="dot"></div><div class="val">4 kHz</div><div class="lab"><span class="lang-nl">Click — snijdt door de mix</span><span class="lang-en">Click — cuts through the mix</span></div></div>
+      </div>
+      <p style="color:var(--cream-dim); font-size:0.84rem; margin-top:8px;">
+        <span class="lang-nl">💡 Veel EQ-presets hebben hier al nodes staan — handige startpunten, geen vaste regels.</span>
+        <span class="lang-en">💡 Many EQ presets already have nodes here — handy starting points, not fixed rules.</span>
+      </p>
+    </div>
+
+    <div class="grid cols-2 reveal">
+      <div class="card">
+        <h3><span class="lang-nl">Hi-Hats Mixen</span><span class="lang-en">Mixing Hi-Hats</span></h3>
+        <ul>
+          <li><span class="lang-nl">Kortere hats = meer ruimte in de mix</span><span class="lang-en">Shorter hats = more room in the mix</span></li>
+          <li><span class="lang-nl">Elke hat zijn eigen frequentie-accent</span><span class="lang-en">Every hat gets its own frequency accent</span></li>
+          <li><span class="lang-nl">Kleine EQ-boosts per hat, op verschillende frequenties</span><span class="lang-en">Small EQ boosts per hat, at different frequencies</span></li>
+        </ul>
+        <div class="note"><span class="lang-nl">doel: geen masking, wel helderheid</span><span class="lang-en">goal: no masking, still clarity</span></div>
+      </div>
+      <div class="card">
+        <h3><span class="lang-nl">Gates</span><span class="lang-en">Gates</span></h3>
+        <p><span class="lang-nl">Korten geluiden in, verwijderen ongewenste staarten, maken drumhits strakker.</span><span class="lang-en">Shorten sounds, remove unwanted tails, make drum hits tighter.</span></p>
+        <div class="note"><span class="lang-nl">veel gebruikt op: percussie · hats · toms · ruisige opnames</span><span class="lang-en">commonly used on: percussion · hats · toms · noisy recordings</span></div>
+      </div>
+      <div class="card">
+        <h3><span class="lang-nl">Pitching &amp; Tuning</span><span class="lang-en">Pitching &amp; Tuning</span></h3>
+        <p><span class="lang-nl">Laat geluiden harmonisch samenwerken en vermindert botsingen.</span><span class="lang-en">Makes sounds work together harmonically and reduces clashes.</span></p>
+        <div class="note"><span class="lang-nl">pitch percussie/hats/samples naar de toonsoort van de track</span><span class="lang-en">pitch percussion/hats/samples to the track's key</span></div>
+      </div>
+      <div class="card">
+        <h3><span class="lang-nl">Reverb</span><span class="lang-en">Reverb</span></h3>
+        <p><span class="lang-nl">Voegt breedte, body en leven toe aan sounds die te droog zijn geworden.</span><span class="lang-en">Adds width, body and life to sounds that have become too dry.</span></p>
+        <div class="note"><span class="lang-nl">⚠️ te veel reverb = minder helderheid, sound zakt naar achteren</span><span class="lang-en">⚠️ too much reverb = less clarity, sound sinks to the back</span></div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <span class="icon">👂</span>
+      <p>
+        <span class="lang-nl"><strong>Mix-oren ontwikkelen.</strong> Mixen is lastig omdat veel aanpassingen subtiel zijn. Leer welke tools er zijn, leer wat elke parameter doet, en blijf experimenteren. Train je oren op modder, hardheid, frequentiebotsingen, dynamiekproblemen en stereobreedte — ervaren engineers horen problemen meteen, puur door herhaling.</span>
+        <span class="lang-en"><strong>Developing mixing ears.</strong> Mixing is hard because many adjustments are subtle. Learn what tools are available, learn what each parameter does, and keep experimenting. Train your ears on mud, harshness, frequency clashes, dynamics issues and stereo width — experienced engineers hear problems instantly, purely through repetition.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+</div><!-- /spine-wrap -->
+
+<!-- ============ SUMMARY / QUICK REFERENCE ============ -->
+<section class="summary-section" id="summary">
+  <div class="module-inner">
+    <div class="module-head reveal">
+      <div class="jack">06</div>
+      <div>
+        <h2><span class="lang-nl">Snelle Samenvatting</span><span class="lang-en">Quick Summary</span></h2>
+        <span class="sub"><span class="lang-nl">Alles op één blik</span><span class="lang-en">Everything at a glance</span></span>
+      </div>
+    </div>
+    <p class="lead-text reveal">
+      <span class="lang-nl">Print 'm dubbelzijdig, of zet 'm naast je DAW als naslagwerk tijdens het produceren.</span>
+      <span class="lang-en">Print it double-sided, or keep it next to your DAW as a reference while producing.</span>
+    </p>
+
+    <div class="summary-grid reveal">
+      <div class="sum-card">
+        <h4><span class="lang-nl">Drums</span><span class="lang-en">Drums</span></h4>
+        <ul>
+          <li><span class="lang-nl">Kick: karakter, niet overdefiniëren</span><span class="lang-en">Kick: character, don't overdefine</span></li>
+          <li><span class="lang-nl">Clap: plan B bewaren, volume + filter</span><span class="lang-en">Clap: keep a plan B, volume + filter</span></li>
+          <li><span class="lang-nl">Hi-hat: EQ3 low-end uit om hi/mid te checken</span><span class="lang-en">Hi-hat: EQ3 low-end off to check hi/mid</span></li>
+          <li><span class="lang-nl">Groove: 1/8e &amp; 1/16e, dan terug naar sounds</span><span class="lang-en">Groove: 1/8th &amp; 1/16th, then back to sounds</span></li>
+        </ul>
+      </div>
+      <div class="sum-card">
+        <h4><span class="lang-nl">Bass</span><span class="lang-en">Bass</span></h4>
+        <ul>
+          <li><span class="lang-nl">Fundament bewust kiezen, naast de kick's 50Hz</span><span class="lang-en">Choose the fundamental deliberately, next to the kick's 50Hz</span></li>
+          <li><span class="lang-nl">Sub mono houden</span><span class="lang-en">Keep the sub mono</span></li>
+          <li><span class="lang-nl">Sidechain kick → bass, ~70ms release</span><span class="lang-en">Sidechain kick → bass, ~70ms release</span></li>
+          <li><span class="lang-nl">Subtractive = rond, FM = scherp/melodisch</span><span class="lang-en">Subtractive = round, FM = sharp/melodic</span></li>
+        </ul>
+      </div>
+      <div class="sum-card">
+        <h4><span class="lang-nl">Sound Design</span><span class="lang-en">Sound Design</span></h4>
+        <ul>
+          <li><span class="lang-nl">Subtractive = wegsnijden</span><span class="lang-en">Subtractive = carving away</span></li>
+          <li><span class="lang-nl">FM = oscillatoren moduleren elkaar</span><span class="lang-en">FM = oscillators modulate each other</span></li>
+          <li><span class="lang-nl">Wavetable = scrollen door golfvormen</span><span class="lang-en">Wavetable = scrolling through waveforms</span></li>
+          <li><span class="lang-nl">Noise/riser voor textuur en transities</span><span class="lang-en">Noise/riser for texture and transitions</span></li>
+        </ul>
+      </div>
+      <div class="sum-card">
+        <h4><span class="lang-nl">Arrangement</span><span class="lang-en">Arrangement</span></h4>
+        <ul>
+          <li><span class="lang-nl">Fase 1: identiteit van de loop</span><span class="lang-en">Phase 1: identity of the loop</span></li>
+          <li><span class="lang-nl">Fase 2: tijd/variatie, 8–32 bars</span><span class="lang-en">Phase 2: time/variation, 8–32 bars</span></li>
+          <li><span class="lang-nl">Muur tussen elke fase</span><span class="lang-en">Wall between every phase</span></li>
+          <li><span class="lang-nl">Fase 3: energie-curve, contrast, transities</span><span class="lang-en">Phase 3: energy curve, contrast, transitions</span></li>
+        </ul>
+      </div>
+      <div class="sum-card">
+        <h4><span class="lang-nl">Mixing</span><span class="lang-en">Mixing</span></h4>
+        <ul>
+          <li><span class="lang-nl">Compressie: pieken eruit, volume omhoog</span><span class="lang-en">Compression: peaks down, volume up</span></li>
+          <li><span class="lang-nl">Sidechain: ~70ms release</span><span class="lang-en">Sidechain: ~70ms release</span></li>
+          <li><span class="lang-nl">Kick EQ: 50Hz · 1kHz · 4kHz · 125–200Hz cut</span><span class="lang-en">Kick EQ: 50Hz · 1kHz · 4kHz · 125–200Hz cut</span></li>
+          <li><span class="lang-nl">Filosofie: elk element zijn eigen rol</span><span class="lang-en">Philosophy: every element its own role</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="module-inner">
+    <p>
+      <span class="lang-nl">Signaalketen — productie cheat sheet · samengesteld uit eigen lesnotities</span>
+      <span class="lang-en">Signal Chain — production cheat sheet · compiled from personal lesson notes</span>
+    </p>
+    <a class="back-top" href="#drums">
+      <span class="lang-nl">↑ terug naar boven</span>
+      <span class="lang-en">↑ back to top</span>
+    </a>
+  </div>
+</footer>
+
+<script>
+  // ---------- language switching ----------
+  (function(){
+    var root = document.documentElement;
+    var buttons = document.querySelectorAll('.lang-switch button');
+    var titles = { nl: 'Signaalketen — Productie Cheat Sheet', en: 'Signal Chain — Production Cheat Sheet' };
+    var descriptions = {
+      nl: 'Een visuele gids door het productieproces: drums, bass, sound design, arrangement en mixing.',
+      en: 'A visual guide through the production process: drums, bass, sound design, arrangement and mixing.'
+    };
+
+    function applyLang(lang){
+      root.setAttribute('data-lang', lang);
+      root.setAttribute('lang', lang);
+      document.title = titles[lang] || titles.nl;
+      var metaDesc = document.querySelector('meta[name="description"]');
+      if(metaDesc) metaDesc.setAttribute('content', descriptions[lang] || descriptions.nl);
+      buttons.forEach(function(b){
+        b.classList.toggle('active', b.getAttribute('data-set-lang') === lang);
+      });
+      try{ localStorage.setItem('signaalketen-lang', lang); }catch(e){}
+    }
+
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        applyLang(btn.getAttribute('data-set-lang'));
+      });
+    });
+
+    var stored = null;
+    try{ stored = localStorage.getItem('signaalketen-lang'); }catch(e){}
+    if(stored === 'nl' || stored === 'en'){
+      applyLang(stored);
+    } else {
+      var browserLang = (navigator.language || 'nl').toLowerCase();
+      applyLang(browserLang.indexOf('nl') === 0 ? 'nl' : 'en');
+    }
+  })();
+
+  // ---------- active nav highlighting ----------
+  const sections = document.querySelectorAll('.module, .summary-section');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const map = {};
+  navLinks.forEach(l => map[l.getAttribute('href').slice(1)] = l);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      if(entry.isIntersecting && map[id]){
+        navLinks.forEach(l => l.classList.remove('active'));
+        map[id].classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ---------- reveal on scroll ----------
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => revealObserver.observe(el));
+</script>
+
+</body>
+</html>
